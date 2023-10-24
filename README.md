@@ -4,18 +4,18 @@ API pour simuler la gestion des becs de pression d'un bar
 
 datas :
 nombre de bec -> caractéristques des becs 
-  - faire des recherhce sur le fonctionement précis
-  - id
-  - marque
-  - CO2 ou compresseur
-  - débit du robinnet (L/H)
-  - temps mise en marche (min)
-  - dimension (L/P/H)
-  - poids (kg)
-  - pression (bar)
+    - faire des recherhce sur le fonctionement précis
+    - id
+    - marque
+    - CO2 ou compresseur
+    - débit du robinnet (L/H)
+    - temps mise en marche (min)
+    - dimension (L/P/H)
+    - poids (kg)
+    - pression (bar)
 type de bières : -> caractéristques des bières (coté produit et coté stockage)
   - coté produit :
-  - - id
+    - id
     - type de bières (IPA, Blonde, Brune, Sour, Stout, Rousse)
     - taux d'alcool
     - ingrédients
@@ -26,7 +26,7 @@ type de bières : -> caractéristques des bières (coté produit et coté stocka
     - IBU
     - id bec utilisé
   - coté stockage :
-  - - id
+    - id
     - nombre de fût
     - taille de fût
     - prix du fût
