@@ -1,15 +1,6 @@
 from django.db import models
 
 # Create your models here.
-
-
-class Ingredient(models.Model):
-
-    present_in = models.ForeignKey(Beer, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
-    description = models.CharField(max_length=200)
-    origin = models.CharField(max_length=50)
-
 class Brewery(models.Model):
 
     name = models.CharField(max_length=200)
@@ -17,13 +8,6 @@ class Brewery(models.Model):
     origin_country = models.CharField(max_length=50)
     origin_region = models.CharField(max_length=50)
 
-class Storage(models.Model):
-
-    beer = models.ForeignKey(Beer, on_delete=models.CASCADE)
-    barrel_left = models.IntegerField()
-    barrel_price = models.IntegerField()
-    working_pressure = models.IntegerField()
-    working_temperature = models.IntegerField()
 
 class BeerType(models.Model):
     
@@ -56,8 +40,24 @@ class Beer(models.Model):
     draft_faucet = models.ForeignKey(DraftFaucet, on_delete=models.CASCADE)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
 
+    name = models.CharField(max_length=60, default="bière")
     alcool_level = models.IntegerField()
     description = models.CharField(max_length=250)
     pint_price = models.IntegerField()
     half_price = models.IntegerField()
     ibu = models.IntegerField()
+
+class Ingredient(models.Model):
+
+    present_in = models.ForeignKey(Beer, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    description = models.CharField(max_length=200)
+    origin = models.CharField(max_length=50)
+
+class Storage(models.Model):
+
+    beer = models.ForeignKey(Beer, on_delete=models.CASCADE)
+    barrel_left = models.IntegerField()
+    barrel_price = models.IntegerField()
+    working_pressure = models.IntegerField()
+    working_temperature = models.IntegerField()
