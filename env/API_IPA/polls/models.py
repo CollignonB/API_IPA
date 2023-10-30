@@ -32,9 +32,9 @@ class DraftFaucet(models.Model):
     height = models.IntegerField()
     depth = models.IntegerField()
     pressure = models.IntegerField()
+    # number = models.IntegerField()
 
 class Beer(models.Model):
-    # beerID = models.IntegerField(default=0)
     beer_type = models.ForeignKey(BeerType, on_delete=models.CASCADE)
     brewery = models.ForeignKey(Brewery, on_delete=models.CASCADE)
     draft_faucet = models.ForeignKey(DraftFaucet, on_delete=models.CASCADE)

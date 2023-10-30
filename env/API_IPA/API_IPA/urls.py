@@ -16,8 +16,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from polls import views
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GrourpViewset)
+router.register(r'beer', views.BeerViewset)
+router.register(r'beer_type', views.BeerTypeViewset)
+router.register(r'brewery', views.BreweryViewset)
+router.register(r'supplier', views.SupplierViewset)
+router.register(r'ingredient', views.IngredientViewset)
+router.register(r'draft_faucet', views.DraftFaucetViewset)
+router.register(r'storage', views.StorageViewset)
+
 
 urlpatterns = [
     path('polls/', include("polls.urls")),
     path('admin/', admin.site.urls),
+    # path('api-auth/', include('rest_framework.urls')),
+    path('', include(router.urls)),
+    path('api-aut/', include('rest_framework.urls', namespace='rest_framework')),
+    # path('api_beer/', include('rest_framework.urls', namespace='beer'))
 ]
