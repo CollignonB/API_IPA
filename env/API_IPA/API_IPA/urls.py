@@ -31,7 +31,12 @@ router = routers.DefaultRouter()
 # router.register(r'storage', views.StorageViewset)
 # router.register(r'beer_type', views.BeerTypeList.as_view())
 
-
+user_list = views.UserViewSet.as_view({
+    'get': 'list'
+})
+user_detail = views.UserViewSet.as_view({
+    'get': 'retrieve'
+})
 urlpatterns = [
     path('api-aut/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
@@ -50,6 +55,6 @@ urlpatterns = [
     path('ingredient/<int:pk>/', views.IngredientDetail.as_view(), name='ingredient-detail'),
     path('storage/', views.StorageList.as_view()),
     path('storage/<int:pk>/', views.StorageDetail.as_view()),
-    path('users/', views.UserList.as_view(), name='user-list'),
-    path('users/<int:pk>/', views.UserDetail.as_view()),
+    path('users/', user_list, name='user-list'),
+    path('users/<int:pk>/', user_detail, name = 'user-detail'),
 ]

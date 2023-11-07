@@ -3,10 +3,10 @@ from polls.models import *
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email']
+        fields = ['url', 'id', 'username', 'email']
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
