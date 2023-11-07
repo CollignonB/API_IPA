@@ -3,12 +3,12 @@ from polls.models import *
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'groups', 'password']
+        fields = ['id', 'username', 'email']
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ['ulr', 'name']
@@ -63,38 +63,38 @@ ancienne version de BeerSerializer
 #         instance.save()
 #         return instance
 """
-class BeerSerializer(serializers.ModelSerializer):
+class BeerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Beer
         fields = '__all__'
 
-class BeerTypeSerializer(serializers.ModelSerializer):
+class BeerTypeSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.IntegerField(read_only=True)
     class Meta:
         model = BeerType
         fields = '__all__'
 
-class BrewerySerializer(serializers.ModelSerializer):
+class BrewerySerializer(serializers.HyperlinkedModelSerializer):
     class Meta :
         model = Brewery
         fields = '__all__'
 
-class SupplierSerializer(serializers.ModelSerializer):
+class SupplierSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Supplier
         fields = '__all__'
 
-class DraftFaucetSerializer(serializers.ModelSerializer):
+class DraftFaucetSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = DraftFaucet
         fields = '__all__'
 
-class IngredientSerializer(serializers.ModelSerializer):
+class IngredientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta :
         model = Ingredient
         fields = '__all__'
 
-class StorageSerializer(serializers.ModelSerializer):
+class StorageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Storage
         fields = ['barrel_left', 'barrel_price', 

@@ -20,8 +20,8 @@ from rest_framework import routers
 from polls import views
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GrourpViewset)
+# router.register(r'users', views.UserViewSet)
+# router.register(r'groups', views.GrourpViewset)
 # router.register(r'beer', views.BeerViewset)
 # router.register(r'beer_type', views.BeerTypeViewset)
 # router.register(r'brewery', views.BreweryViewset)
@@ -33,24 +33,23 @@ router.register(r'groups', views.GrourpViewset)
 
 
 urlpatterns = [
-    path('api-aut/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api-aut/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
-    path('polls/', include("polls.urls")),
-    path('', include(router.urls)),
-    path('beer/', views.BeerList.as_view()),
-    path('beer/<int:pk>/', views.BeerDetail.as_view()),
-    path('beer_type/', views.BeerTypeList.as_view()),
-    path('beer_type/<int:pk>/', views.BeerTypeDetail.as_view()),
-    path('brewery/', views.BreweryList.as_view()),
-    path('brewery/<int:pk>/', views.BreweryDetail.as_view()),
-    path('supplier/', views.SupplierList.as_view()),
-    path('supplier/<int:pk>/', views.SupplierDetail.as_view()),
-    path('draft_faucet/', views.DraftFaucetList.as_view()),
-    path('draft_faucet/<int:pk>/', views.DraftFaucetDetail.as_view()),
-    path('ingredient/', views.IngredientList.as_view()),
-    path('ingredient/<int:pk>/', views.IngredientDetail.as_view()),
+    path('', views.api_root),
+    path('beer/', views.BeerList.as_view(), name='beer-list'),
+    path('beer/<int:pk>/', views.BeerDetail.as_view(), name='beer-detail'),
+    path('beer_type/', views.BeerTypeList.as_view(), name='beer-type-list'),
+    path('beer_type/<int:pk>/', views.BeerTypeDetail.as_view(), name='beertype-detail'),
+    path('brewery/', views.BreweryList.as_view(), name='brewery-list'),
+    path('brewery/<int:pk>/', views.BreweryDetail.as_view(), name='brewery-detail'),
+    path('supplier/', views.SupplierList.as_view(), name='supplier-list'),
+    path('supplier/<int:pk>/', views.SupplierDetail.as_view(), name='supplier-detail'),
+    path('draft_faucet/', views.DraftFaucetList.as_view(), name='draftfaucet-list'),
+    path('draft_faucet/<int:pk>/', views.DraftFaucetDetail.as_view(), name='draftfaucet-detail'),
+    path('ingredient/', views.IngredientList.as_view(), name='ingredient-list'),
+    path('ingredient/<int:pk>/', views.IngredientDetail.as_view(), name='ingredient-detail'),
     path('storage/', views.StorageList.as_view()),
     path('storage/<int:pk>/', views.StorageDetail.as_view()),
-    # path('beer_type/', views.BeerList.as_view()),
-    # path('beer_type/<int:pk>/', views.BeerDetail.as_view()),
+    path('users/', views.UserList.as_view(), name='user-list'),
+    path('users/<int:pk>/', views.UserDetail.as_view()),
 ]
