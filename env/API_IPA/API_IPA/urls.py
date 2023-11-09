@@ -37,12 +37,19 @@ user_list = views.UserViewSet.as_view({
 user_detail = views.UserViewSet.as_view({
     'get': 'retrieve'
 })
+
+beer_list = views.BeerViewSet.as_view({
+    'get': 'list'
+})
+beer_detail = views.BeerViewSet.as_view({
+    'get': 'retrieve'
+})
 urlpatterns = [
     path('api-aut/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
     path('', views.api_root),
-    path('beer/', views.BeerList.as_view(), name='beer-list'),
-    path('beer/<int:pk>/', views.BeerDetail.as_view(), name='beer-detail'),
+    path('beer/', beer_list, name='beer-list'),
+    path('beer/<int:pk>/', beer_detail, name='beer-detail'),
     path('beer_type/', views.BeerTypeList.as_view(), name='beer-type-list'),
     path('beer_type/<int:pk>/', views.BeerTypeDetail.as_view(), name='beertype-detail'),
     path('brewery/', views.BreweryList.as_view(), name='brewery-list'),

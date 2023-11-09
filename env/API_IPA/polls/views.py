@@ -30,91 +30,31 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # permission_classes = [permissions.IsAuthenticated]
 
-# class UserList(generics.ListAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
+class BeerViewSet(viewsets.ModelViewSet):
 
-# class UserDetail(generics.RetrieveAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
+    queryset = Beer.objects.all()
+    serializer_class = BeerSerializer
 
-# class BeerViewset(viewsets.ModelViewSet):
-#     queryset = Beer.objects.all().order_by('name') 
+# class BeerList(mixins.ListModelMixin,
+#                mixins.CreateModelMixin,
+#                generics.GenericAPIView):
+
+#     queryset = Beer.objects.all()
 #     serializer_class = BeerSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-class BeerList(mixins.ListModelMixin,
-               mixins.CreateModelMixin,
-               generics.GenericAPIView):
-    """
-    List of all beers, or create new beer
-    """
-    queryset = Beer.objects.all()
-    serializer_class = BeerSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-    
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)    
-    # def get(self, request, format = None):
-    #     beers = Beer.objects.all().order_by('id')
-    #     serializer = BeerSerializer(beers, many = True)
-    #     return Response(serializer.data)
-
-    # def post(Self, request, format=None):
-    #     serializer = BeerSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# class BeerDetail(mixins.RetrieveModelMixin,
-#                 mixins.UpdateModelMixin,
-#                 mixins.DestroyModelMixin,
-#                 generics.GenericAPIView):
 #     def get(self, request, *args, **kwargs):
-#         return self.retrieve(request, *args, **kwargs)
-
-#     def put(self, request, *args, **kwargs):
-#         return self.update(request, *args, **kwargs)
-
-#     def delete(self, request, *args, **kwargs):
-#         return self.destroy(request, *args, **kwargs)
-class BeerDetail(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Retrieve, update or delete a beer instance
-    """
-    queryset = Beer.objects.all()
-    serializer_class = BeerSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-    # def get_object(self, pk):
-    #     try:
-    #         return Beer.objects.get(pk=pk)
-    #     except Beer.DoesNotExist:
-    #         raise Http404
+#         return self.list(request, *args, **kwargs)
     
-    # def get(self, request, pk, format=None):
-    #     beer = self.get_object(pk)
-    #     serializer = BeerSerializer(beer)
-    #     return Response(serializer.data)
-    
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)    
 
-    # def put(self, request, pk, format=None):
-    #     beer = self.get_object(pk)
-    #     serializer = BeerSerializer(beer, data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-    # def delete(self, request, pk, format=None):
-    #     beer = self.get_object(pk)
-    #     beer.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
+# class BeerDetail(generics.RetrieveUpdateDestroyAPIView):
+
+    # queryset = Beer.objects.all()
+    # serializer_class = BeerSerializer
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class BeerTypeList(generics.ListCreateAPIView):
     queryset = BeerType.objects.all()
@@ -177,12 +117,12 @@ class StorageDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 # class BreweryViewset(viewsets.ModelViewSet):
-#     queryset = Brewery.objects.all().order_by('name')
+#     queryset = Brewery.objects.all()
 #     serializer_class = BrewerySerializer
 #     permission_classes = [permissions.IsAuthenticated]
 
 # class SupplierViewset(viewsets.ModelViewSet):
-#     queryset = Supplier.objects.all().order_by('name')
+#     queryset = Supplier.objects.all()
 #     serializer_class = SupplierSerializer
 #     permission_classes = [permissions.IsAuthenticated]
 
@@ -192,7 +132,7 @@ class StorageDetail(generics.RetrieveUpdateDestroyAPIView):
 #     permission_classes = [permissions.IsAuthenticated]
 
 # class IngredientViewset(viewsets.ModelViewSet):
-#     queryset = Ingredient.objects.all().order_by('name')
+#     queryset = Ingredient.objects.all()
 #     serializer_class = IngredientSerializer
 #     permission_classes = [permissions.IsAuthenticated]
 
