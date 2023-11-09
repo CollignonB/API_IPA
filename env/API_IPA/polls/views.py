@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions, status, mixins, generics, renderers
@@ -72,10 +72,21 @@ class BreweryList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     
 class BreweryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Brewery.objects.all()
+
+    sql = """SELECT polls_beer.id ,polls_beer.name as beer_name
+            FROM polls_beer, polls_brewery  
+            WHERE polls_beer.brewery_id = polls_brewery.id 
+            AND polls_brewery.id = 1""" 
+    # sql = "SELECT id, name FROM polls_brewery WHERE id = 1"
+    queryset = Brewery.objects.raw(sql)
+
+    for r in queryset :
+        print(r.beer_name, r.id)
+    # serializer = BrewerySerializer(queryset, many= True)
+    # print((serializer.data))
     serializer_class = BrewerySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
+ 
 class SupplierList(generics.ListCreateAPIView):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer

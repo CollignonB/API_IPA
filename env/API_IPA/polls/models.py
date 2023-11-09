@@ -39,7 +39,7 @@ class Beer(models.Model):
     brewery = models.ForeignKey(Brewery, on_delete=models.CASCADE)
     draft_faucet = models.ForeignKey(DraftFaucet, on_delete=models.CASCADE)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
-
+    
     name = models.CharField(max_length=60, default="bière")
     alcool_level = models.IntegerField()
     description = models.CharField(max_length=250)

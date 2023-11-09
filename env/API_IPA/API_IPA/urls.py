@@ -39,7 +39,8 @@ user_detail = views.UserViewSet.as_view({
 })
 
 beer_list = views.BeerViewSet.as_view({
-    'get': 'list'
+    'get': 'list',
+    'post': 'create',
 })
 beer_detail = views.BeerViewSet.as_view({
     'get': 'retrieve'

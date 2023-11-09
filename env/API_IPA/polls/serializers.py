@@ -14,24 +14,27 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = ['ulr', 'name']
 
-
-class BrewerySerializer(serializers.HyperlinkedModelSerializer):
-    
+class DynamicFieldsCategorySerializer(serializers.HyperlinkedModelSerializer):
     def __init__(self, *args, **kwargs):
-
+        # Don't pass the 'fields' arg up to the superclass
         fields = kwargs.pop('fields', None)
+
+        # Instantiate the superclass normally
         super().__init__(*args, **kwargs)
 
         if fields is not None:
+            # Drop any fields that are not specified in the `fields` argument.
             allowed = set(fields)
             existing = set(self.fields)
-            for fields_name in existing - allowed:
-                self.fields.pop(fields_name)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
 
-    class Meta :
-        model = Brewery
-        fields = ['id', 'name', 'url', 'description',
-                  'origin_country', 'origin_region']
+class BreweryBeerListSerializer(DynamicFieldsCategorySerializer):
+    class Meta:
+        model = Beer
+        fields = ['id', 'name']
+
+
 """
 
 ancienne version de BeerSerializer
@@ -84,81 +87,60 @@ ancienne version de BeerSerializer
 #         return instance
 """
 
+class BeerTypeSerializer(DynamicFieldsCategorySerializer):
 
-class BeerTypeSerializer(serializers.HyperlinkedModelSerializer):
-    def __init__(self, *args, **kwargs):
-
-        fields = kwargs.pop('fields', None)
-        super().__init__(*args, **kwargs)
-
-        if fields is not None:
-            allowed = set(fields)
-            existing = set(self.fields)
-            for fields_name in existing - allowed:
-                self.fields.pop(fields_name)
     class Meta:
         model = BeerType
         fields = '__all__'
 
 
-class SupplierSerializer(serializers.HyperlinkedModelSerializer):
-    def __init__(self, *args, **kwargs):
+class SupplierSerializer(DynamicFieldsCategorySerializer):
 
-        fields = kwargs.pop('fields', None)
-        super().__init__(*args, **kwargs)
-
-        if fields is not None:
-            allowed = set(fields)
-            existing = set(self.fields)
-            for fields_name in existing - allowed:
-                self.fields.pop(fields_name)
     class Meta:
         model = Supplier
         fields = '__all__'
 
-class DraftFaucetSerializer(serializers.HyperlinkedModelSerializer):
-    def __init__(self, *args, **kwargs):
+class DraftFaucetSerializer(DynamicFieldsCategorySerializer):
 
-        fields = kwargs.pop('fields', None)
-        super().__init__(*args, **kwargs)
-
-        if fields is not None:
-            allowed = set(fields)
-            existing = set(self.fields)
-            for fields_name in existing - allowed:
-                self.fields.pop(fields_name)
     class Meta:
         model = DraftFaucet
         fields = '__all__'
 
-class IngredientSerializer(serializers.HyperlinkedModelSerializer):
-    def __init__(self, *args, **kwargs):
+class IngredientSerializer(DynamicFieldsCategorySerializer):
 
-        fields = kwargs.pop('fields', None)
-        super().__init__(*args, **kwargs)
-
-        if fields is not None:
-            allowed = set(fields)
-            existing = set(self.fields)
-            for fields_name in existing - allowed:
-                self.fields.pop(fields_name)
     class Meta :
         model = Ingredient
         fields = '__all__'
 
-class StorageSerializer(serializers.HyperlinkedModelSerializer):
+class StorageSerializer(DynamicFieldsCategorySerializer):
     class Meta:
         model = Storage
         fields = ['barrel_left', 'barrel_price', 
                   'working_pressure', 'working_temperature']
                   
-class BeerSerializer(serializers.HyperlinkedModelSerializer):
-                              
-    brewery = BrewerySerializer(fields = ('name', 'url'))
-    beer_type = BeerTypeSerializer(fields = ('name', 'url'))
-    supplier = SupplierSerializer(fields = ('name', 'url'))
+class BeerSerializer(DynamicFieldsCategorySerializer):
+
+    # brewery = BrewerySerializer(fields = ('name', 'url'))
+    # beer_type = BeerTypeSerializer(fields = ('name', 'url'))
+    # supplier = SupplierSerializer(fields = ('name', 'url'))
     # ingredient = IngredientSerializer(fields = ('name'))
     class Meta:
         model = Beer
-        fields = ['id', 'url', 'name','alcool_level', 'description', 'pint_price', 'half_price','ibu', 'brewery', 'beer_type', 'supplier']
+        fields = ['id', 'url', 'name','alcool_level', 'description', 'pint_price', 'half_price','ibu', 'brewery', 'beer_type', 'supplier', 'draft_faucet']
         # fields = '__all__'
+
+class BrewerySerializer(DynamicFieldsCategorySerializer):
+
+    # beer_produced = BeerSerializer(fields = ['id', 'name'], many= True, allow_null=True)
+    # beer_produced = serializers.CharField(source='models.Beer.id')
+
+    class Meta :
+        model = Brewery
+        # fields = ['id', 'name', 'url', 'description',
+        #           'origin_country', 'origin_region']
+        fields = '__all__'
+    
+    def to_internal_value(self, data):
+        resource_data = data['beer_id', 'beer_name']
+
+        return super().to_internal_value(resource_data)
