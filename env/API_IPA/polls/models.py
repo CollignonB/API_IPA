@@ -7,6 +7,7 @@ class Brewery(models.Model):
     description = models.CharField(max_length=200)
     origin_country = models.CharField(max_length=50)
     origin_region = models.CharField(max_length=50)
+    # beer_produced = models.ForeignKey(Beer, on_delete=models.CASCADE)
 
 
 class BeerType(models.Model):
@@ -35,6 +36,8 @@ class DraftFaucet(models.Model):
     number = models.IntegerField()
 
 class Beer(models.Model):
+
+    # peut-être changer le model pour que tout pointe sur Beer plutot que l'inverse ?
     beer_type = models.ForeignKey(BeerType, on_delete=models.CASCADE)
     brewery = models.ForeignKey(Brewery, on_delete=models.CASCADE)
     draft_faucet = models.ForeignKey(DraftFaucet, on_delete=models.CASCADE)

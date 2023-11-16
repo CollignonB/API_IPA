@@ -1,15 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
-
 from django.contrib.auth.models import User, Group
+from django.db import connection
+
 from rest_framework import viewsets, permissions, status, mixins, generics, renderers
 from rest_framework.views import APIView
-from polls.models import *
-from polls.serializers import *
-from polls.permissions import IsOwnerOrReadOnly
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
+
+from polls.models import *
+from polls.serializers import *
+from polls.permissions import IsOwnerOrReadOnly
 
 def index(request):
     return HttpResponse("API_IPA")
@@ -73,17 +75,7 @@ class BreweryList(generics.ListCreateAPIView):
     
 class BreweryDetail(generics.RetrieveUpdateDestroyAPIView):
 
-    sql = """SELECT polls_beer.id ,polls_beer.name as beer_name
-            FROM polls_beer, polls_brewery  
-            WHERE polls_beer.brewery_id = polls_brewery.id 
-            AND polls_brewery.id = 1""" 
-    # sql = "SELECT id, name FROM polls_brewery WHERE id = 1"
-    queryset = Brewery.objects.raw(sql)
-
-    for r in queryset :
-        print(r.beer_name, r.id)
-    # serializer = BrewerySerializer(queryset, many= True)
-    # print((serializer.data))
+    queryset = Brewery.objects.all()
     serializer_class = BrewerySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
  
