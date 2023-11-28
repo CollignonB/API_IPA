@@ -118,29 +118,32 @@ class StorageSerializer(DynamicFieldsCategorySerializer):
         fields = ['barrel_left', 'barrel_price', 
                   'working_pressure', 'working_temperature']
                   
-class BeerSerializer(DynamicFieldsCategorySerializer):
 
-    # brewery = BrewerySerializer(fields = ('name', 'url'))
-    # beer_type = BeerTypeSerializer(fields = ('name', 'url'))
-    # supplier = SupplierSerializer(fields = ('name', 'url'))
-    # ingredient = IngredientSerializer(fields = ('name'))
-    class Meta:
-        model = Beer
-        fields = ['id', 'url', 'name','alcool_level', 'description', 'pint_price', 'half_price','ibu', 'brewery', 'beer_type', 'supplier', 'draft_faucet']
-        # fields = '__all__'
 
 class BrewerySerializer(DynamicFieldsCategorySerializer):
 
     # beer_produced = BeerSerializer(fields = ['id', 'name'], many= True, allow_null=True)
     # beer_produced = serializers.CharField(source='models.Beer.id')
+    # beer = BeerSerializer(many=True, fields=['id', 'name'])
 
     class Meta :
         model = Brewery
-        # fields = ['id', 'name', 'url', 'description',
-        #           'origin_country', 'origin_region']
-        fields = '__all__'
+        fields = ['id', 'name', 'url', 'description',
+                  'origin_country', 'origin_region']
+        # fields = '__all__'
     
     def to_internal_value(self, data):
         resource_data = data['beer_id', 'beer_name']
 
         return super().to_internal_value(resource_data)
+
+class BeerSerializer(DynamicFieldsCategorySerializer):
+
+    brewery = BrewerySerializer(fields = ('name', 'url'))
+    beer_type = BeerTypeSerializer(fields = ('name', 'url'))
+    supplier = SupplierSerializer(fields = ('name', 'url'))
+    # ingredient = IngredientSerializer(fields = ('name'))
+    class Meta:
+        model = Beer
+        fields = ['id', 'url', 'name','alcool_level', 'description', 'pint_price', 'half_price','ibu', 'brewery', 'beer_type', 'supplier', 'draft_faucet']
+        # fields = '__all__'

@@ -36,8 +36,7 @@ class DraftFaucet(models.Model):
     number = models.IntegerField()
 
 class Beer(models.Model):
-
-    # peut-être changer le model pour que tout pointe sur Beer plutot que l'inverse ?
+    
     beer_type = models.ForeignKey(BeerType, on_delete=models.CASCADE)
     brewery = models.ForeignKey(Brewery, on_delete=models.CASCADE)
     draft_faucet = models.ForeignKey(DraftFaucet, on_delete=models.CASCADE)
